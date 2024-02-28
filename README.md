@@ -2,6 +2,7 @@
 Stanza Sentiment Analyzer for the English Language as Molfar Service
 
 Examples of Input and Output JSON-streams:
+
 1)
 - Input:
 {"text": "Text with positive tonality."}
@@ -16,6 +17,6 @@ Examples of Input and Output JSON-streams:
 
 3)
 - Input:
-	{"text": "Text with neutral tonality."}
+{"text": "Text with neutral tonality."}
 - Output
-	{"emotion": "neutral"}
+{"emotion": "neutral"}
