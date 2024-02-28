@@ -5,18 +5,18 @@ Examples of Input and Output JSON-streams:
 
 1)
 - Input:
-{"text": "Text with positive tonality."}
+{"text": "The text message with positive tonality."}
 - Output:
 {"emotion": "positive"}
 
 2)
 - Input:
-{"text": "Text with negative tonality."}
+{"text": "The text message with negative tonality."}
 - Output:
 {"emotion": "negative"}
 
 3)
 - Input:
-{"text": "Text with neutral tonality."}
+{"text": "The text message with neutral tonality."}
 - Output:
 {"emotion": "neutral"}
