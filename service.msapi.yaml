@@ -1,0 +1,138 @@
+msapi: 1.0.1
+
+metadata: 
+    title: Sentiment Analysis for English Language
+    id: "@molfar/service/sa-en"
+    
+components:
+
+    schemas:
+        
+        INPUT:
+            type: object
+            required:
+                - scraper
+                - langDetector
+            properties:
+
+                scraper:
+                    type: object
+                    required:
+                        - message
+                    properties:
+                        message:
+                            type: object
+                            required:
+                                - text
+                            properties: 
+                                text:
+                                    type: string
+                            additionalProperties: true                
+                    additionalProperties: true
+                
+                langDetector:
+                    type: object
+                    required:
+                        - language
+                    properties:
+                        language:
+                            type: object
+                            required:
+                                - locale
+                                - scores
+                            properties:
+                                locale:
+                                    type: string
+                                scores:
+                                    type: array                                                    
+                            additionalProperties: true
+                    additionalProperties: true
+            additionalProperties: true
+
+        OUTPUT:
+            type: object
+            
+            required:
+                - scraper
+                - langDetector
+                - sentiments
+            
+            properties:
+
+                ner:
+                    type: object    
+
+                scraper:
+                    type: object
+                    required:
+                        - message
+                    properties:
+                        message:
+                            type: object
+                            required:
+                                - text
+                            properties: 
+                                text:
+                                    type: string
+                            additionalProperties: true                
+                    additionalProperties: true
+                
+                langDetector:
+                    type: object
+                    required:
+                        - language
+                    properties:
+                        language:
+                            type: object
+                            required:
+                                - locale
+                                - scores
+                            properties:
+                                locale:
+                                    type: string
+                                scores:
+                                    type: array                                                    
+                            additionalProperties: true
+                    additionalProperties: true
+            additionalProperties: true
+                
+
+service:
+
+    consume:
+        amqp: 
+            url: "amqps://xoilebqg:Nx46t4t9cxQ2M0rF2rIyZPS_xbAhmJIG@hornet.rmq.cloudamqp.com/xoilebqg"
+        
+        queue:
+            name: ner-en
+            exchange:
+                name: ner
+                
+                # 
+                # for test
+                # 
+                # name: lang-detector
+                # 
+                
+                mode: fanout
+                options:
+                    durable: true
+                    persistent: true
+            options:
+                noAck: false 
+                exclusive: false   
+        message:
+            $ref: "#/components/schemas/INPUT"
+            
+    produce:
+        amqp: 
+            url: "amqps://xoilebqg:Nx46t4t9cxQ2M0rF2rIyZPS_xbAhmJIG@hornet.rmq.cloudamqp.com/xoilebqg"
+        
+        exchange:
+            name: "sa"
+            mode: fanout
+            options:
+                durable: true
+                persistent: true
+        message:
+            $ref: "#/components/schemas/OUTPUT"
